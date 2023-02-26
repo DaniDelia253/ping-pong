@@ -19,11 +19,29 @@ const client = new Client({
 
 //to make sure we know when the bot is ready
 client.on("ready", () => {
-	console.log("The bot is ready :)");
+	console.log("The bot is ready :)))))");
 });
 
 //so basically, look at every new message.....
 client.on("messageCreate", async (message) => {
+	//if the message is from dani and has the words "has reached level"
+	if (
+		//todo change this to arcane when ready for NVO
+		message.content.includes("cat")
+	) {
+		//then i want it to react with a random emoji from a list
+		const list = [
+			"1078506917812506624",
+			"1079448316321992715",
+			"1079448313385996338",
+			"1079448310982651975",
+			"1079448308604485743",
+			"1078508965098422417",
+		];
+		const number = Math.floor(Math.random() * 6);
+		message.react(list[number]);
+	}
+
 	//and if it contains a number followed by a space and teh word fact....
 	if (
 		/[0-9]+\ (fact)/.test(message.content) &&
@@ -83,3 +101,4 @@ client.on("messageCreate", async (message) => {
 
 // log in and auhtenticate
 client.login(process.env.TOKEN);
+//"1078506917812506624" "1079448316321992715" "1079448313385996338" "1079448310982651975" "1079448308604485743"
