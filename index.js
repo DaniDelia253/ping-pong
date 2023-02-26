@@ -26,8 +26,9 @@ client.on("ready", () => {
 client.on("messageCreate", async (message) => {
 	//if the message is from dani and has the words "has reached level"
 	if (
-		//todo change this to arcane when ready for NVO
-		message.content.includes("cat")
+		//todo change this to only arcane, and replace emojies, and change the random number limit
+		message.content.includes("cat") ||
+		((message.author.username === "Arcane" || message.author.username === "DaniDelia") && message.content.includes("has reached level"))
 	) {
 		//then i want it to react with a random emoji from a list
 		const list = [
@@ -43,7 +44,6 @@ client.on("messageCreate", async (message) => {
 			"1079462912025952386",
 		];
 		const number = Math.floor(Math.random() * 10);
-		console.log(number);
 		message.react(list[number]);
 	}
 
