@@ -1,4 +1,4 @@
-import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+import * as dotenv from "dotenv";
 dotenv.config();
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import fetch from "node-fetch";
@@ -19,7 +19,7 @@ const client = new Client({
 
 //to make sure we know when the bot is ready
 client.on("ready", () => {
-	console.log("The bot is ready :)");
+	console.log("The bot is ready :)))))");
 });
 
 //so basically, look at every new message.....
@@ -39,6 +39,14 @@ client.on("messageCreate", async (message) => {
 		const reply = await response.text();
 		//send the message with the fact to the channel!
 		message.channel.send(reply);
+		//OR ELSE: if the message says show me a cat:
+	} else if (message.content.toLowerCase().trim() === "show me a cat") {
+		//get a cat from the internet
+		const reply = await fetch("https://aws.random.cat/meow");
+		const file = await reply.json();
+		//send the cat to the channel
+		message.channel.send(file.file);
+
 		//OR ELSE: if the message contains any spelling of the words 'ping' or 'pong' (ie. piiiing, poooongggg).....
 	} else if (
 		/[pP]+[iIoO]+[nN]+[gG]+/.test(message.content) &&
