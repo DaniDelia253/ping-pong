@@ -1,0 +1,55 @@
+//and if it contains a number followed by a space and teh word fact....
+if (
+	/[0-9]+\ (fact)/.test(message.content) &&
+	message.author.username !== "ping-pong"
+) {
+	//get a fact with that number!!
+	const response = await fetch(
+		`http://numbersapi.com/${message.content
+			.match(/[0-9]+\ /)
+			.toString()
+			.trim()}`
+	);
+	const reply = await response.text();
+	//send the message with the fact to the channel!
+	message.channel.send(reply);
+	//OR ELSE: if the message says show me a cat:
+} else if (message.content.toLowerCase().trim() === "show me a cat") {
+	//get a cat from the internet
+	const reply = await fetch("https://aws.random.cat/meow");
+	const file = await reply.json();
+	//send the cat to the channel
+	message.channel.send(file.file);
+
+	//OR ELSE: if the message contains any spelling of the words 'ping' or 'pong' (ie. piiiing, poooongggg).....
+} else if (
+	/[pP]+[iIoO]+[nN]+[gG]+/.test(message.content) &&
+	message.author.username !== "ping-pong"
+) {
+	//go through every single letter of the message..... and....
+	let response = "";
+	for (let char of message.content) {
+		switch (char) {
+			//if the letter is an i...
+			case "i":
+				//change it to an o...
+				response += "o";
+				break;
+			case "I":
+				response += "O";
+				break;
+			case "o":
+				response += "i";
+				break;
+			case "O":
+				response += "I";
+				break;
+			default:
+				//keep all other letters the same
+				response += char;
+				break;
+		}
+	}
+	//send the response
+	message.channel.send(response);
+}
