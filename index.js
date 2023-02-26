@@ -13,7 +13,7 @@ const client = new Client({
 		GatewayIntentBits.MessageContent,
 		//with these three, I can gain access to text in messages
 		//if i wanted info about reactions, I would have to specify that here!!
-		//if something isn't working, most likely the right info is not included here!
+		//!if something isn't working, most likely the right info is not included here!
 	],
 });
 
