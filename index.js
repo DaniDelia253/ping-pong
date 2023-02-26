@@ -36,10 +36,14 @@ client.on("messageCreate", async (message) => {
 			"1079448313385996338",
 			"1079448310982651975",
 			"1079448308604485743",
-			"1078508965098422417", "1079463337617797260", "1079463626957664327", "1079464077442699355", "1079462912025952386"
+			"1078508965098422417",
+			"1079463337617797260",
+			"1079463626957664327",
+			"1079464077442699355",
+			"1079462912025952386",
 		];
-		const number = Math.floor(Math.random() * 9);
-		console.log(number)
+		const number = Math.floor(Math.random() * 10);
+		console.log(number);
 		message.react(list[number]);
 	}
 
@@ -59,7 +63,8 @@ client.on("messageCreate", async (message) => {
 		//send the message with the fact to the channel!
 		message.channel.send(reply);
 		//OR ELSE: if the message says show me a cat:
-	} if (message.content.toLowerCase().trim().includes("show me a cat")) {
+	}
+	if (message.content.toLowerCase().trim().includes("show me a cat")) {
 		//get a cat from the internet
 		const reply = await fetch("https://aws.random.cat/meow");
 		const file = await reply.json();
@@ -67,7 +72,8 @@ client.on("messageCreate", async (message) => {
 		message.channel.send(file.file);
 
 		//OR ELSE: if the message contains any spelling of the words 'ping' or 'pong' (ie. piiiing, poooongggg).....
-	} if (
+	}
+	if (
 		/[pP]+[iIoO]+[nN]+[gG]+/.test(message.content) &&
 		message.author.username !== "ping-pong"
 	) {
