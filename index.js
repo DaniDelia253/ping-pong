@@ -28,7 +28,7 @@ client.on("messageCreate", async (message) => {
 	if (
 		//todo change this to only arcane, and replace emojies, and change the random number limit
 		message.content.includes("cat") ||
-		((message.author.username === "Arcane" || message.author.username === "DaniDelia") && message.content.includes("has reached level"))
+		((message.author.username === "Arcane" || message.author.username === "DaniDelia"|| message.author.username === "stenny") && message.content.includes("has reached level"))
 	) {
 		//then i want it to react with a random emoji from a list
 		const list = [
