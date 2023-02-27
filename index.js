@@ -11,6 +11,7 @@ const client = new Client({
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMessageReactions
 		//with these three, I can gain access to text in messages
 		//if i wanted info about reactions, I would have to specify that here!!
 		//if something isn't working, most likely the right info is not included here!
@@ -26,7 +27,7 @@ client.on("ready", () => {
 client.on("messageCreate", async (message) => {
 	//if the message is from dani and has the words "has reached level"
 	if (
-		//todo change this to only arcane, and replace emojies, and change the random number limit
+		//todo add/replace emojies, and change the random number limit accordingly. 
 		message.content.includes("cat") ||
 		((message.author.username === "Arcane" ||
 			message.author.username === "DaniDelia" ||
@@ -107,8 +108,31 @@ client.on("messageCreate", async (message) => {
 		//send the response
 		message.channel.send(response);
 	}
-});
+})
+client.on("messageReactionAdd",async (reaction) =>{
+		// if (reaction === )
+		//this is for Server
+		if (reaction._emoji.id === "1079573401888358510"){
+			// message.react("1079573401888358510")
+			const channel = await client.channels.fetch(reaction.message.channelId)
+			channel.messages.fetch(reaction.message.id).then(msg=>{
+				msg.react("1079573401888358510")
+			})
+		}
+	})
+client.on("messageReactionAdd",async (reaction) =>{
+		// if (reaction === )
+		//this is for NVO
+		if (reaction._emoji.id === "1079573678515298344"){
+			// message.react("1079573401888358510")
+			const channel = await client.channels.fetch(reaction.message.channelId)
+			channel.messages.fetch(reaction.message.id).then(msg=>{
+				msg.react("1079573678515298344")
+			})
+		}
+})
 
 // log in and auhtenticate
 client.login(process.env.TOKEN);
 //"1078506917812506624" "1079448316321992715" "1079448313385996338" "1079448310982651975" "1079448308604485743"
+//(1079573401888358510 serverleaf) and (1079573678515298344 for NVO/akaServerID#938105437180551168)
