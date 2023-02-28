@@ -25,7 +25,7 @@ client.on("ready", () => {
 
 //so basically, look at every new message.....
 client.on("messageCreate", async (message) => {
-	//if the message is from dani and has the words "has reached level"
+	//if the message is from dani, stenny or Arcane and has the words "has reached level"
 	if (
 		//todo add/replace emojies, and change the random number limit accordingly. 
 		message.content.includes("cat") ||
@@ -34,7 +34,7 @@ client.on("messageCreate", async (message) => {
 			message.author.username === "stenny") &&
 			message.content.includes("has reached level"))
 	) {
-		//then i want it to react with a random emoji from a list
+		//then i want it to react with a random emoji from this list:
 		const list = [
 			"1078506917812506624",
 			"1079448316321992715",
@@ -50,7 +50,12 @@ client.on("messageCreate", async (message) => {
 		const number = Math.floor(Math.random() * 10);
 		message.react(list[number]);
 	}
-
+	//if you say thank you to ping pong
+	if (message.content.includes("thank you ping pong")) {
+		//i want him to reply with "youre welcome!"
+		message.channel.send("youre welcome!");
+		//const reply = response.text("youre welcome");
+	}
 	//and if it contains a number followed by a space and teh word fact....
 	if (
 		/[0-9]+\ (fact)/.test(message.content) &&
