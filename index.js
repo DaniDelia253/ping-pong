@@ -3,6 +3,13 @@ dotenv.config();
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import fetch from "node-fetch";
 
+//text examples:
+//todo example orange
+//!    example red
+//?    example blue
+//*    example green 
+//~~   example strikethough
+
 //look at the docs for ALLLL issues!!
 
 //client obj represents the entire bot:
@@ -84,7 +91,9 @@ client.on("messageCreate", async (message) => {
 	}
 	if (
 		/[pP]+[iIoO]+[nN]+[gG]+/.test(message.content) &&
-		message.author.username !== "ping-pong"
+		message.author.username !== "ping-pong" &&
+		message.content !== "thank you ping pong" &&
+		message.content !== "show me a cat"
 	) {
 		//go through every single letter of the message..... and....
 		let response = "";
