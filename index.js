@@ -146,55 +146,6 @@ client.on("messageCreate", async (message) => {
 		//send the response
 		message.channel.send(response);
 	}
-
-	// const embedMessage = {
-	// 	type: "rich",
-	// 	title: `✿﹒welcome  ﹒✿`,
-	// 	description: `Welcome <@${newlyJoinedMemberId}> to NVO,  it's lovely to have you here!\n‎\n﹒verify our ${ChannelTags.NVOrules} & grab some ${ChannelTags.NVOroles}\n\n﹒then come hang out with us in ${ChannelTags.NVOanythingGoes}!\n‎`,
-	// 	color: 0xedb2aa,
-	// 	image: {
-	// 		url: `https://i.imgur.com/7m2LO4M.png`,
-	// 		height: 0,
-	// 		width: 0,
-	// 	},
-	// };
-	// if (message.content.includes("test the welcome message embed")) {
-	// 	message.channel.send({ embeds: [embedMessage] });
-	// }
-});
-
-//welcome messagre for when new members join in:
-client.on("guildMemberAdd", async (member) => {
-	//when a new member joins happens, get their id and establish all variables we need:
-	newlyJoinedMemberId = member.user.id;
-	//create the embed to send:
-	const embedMessage = {
-		type: "rich",
-		title: `✿﹒welcome  ﹒✿`,
-		description: `Welcome <@${newlyJoinedMemberId}> to NVO,  it's lovely to have you here!\n‎\n﹒verify our ${ChannelTags.NVOrules} & grab some ${ChannelTags.NVOroles}\n\n﹒then come hang out with us in ${ChannelTags.NVOanythingGoes}!\n‎`,
-		color: 0xedb2aa,
-		image: {
-			url: `https://i.imgur.com/7m2LO4M.png`,
-			height: 0,
-			width: 0,
-		},
-	};
-	//the bot will tag them in a welcome message and mention checking out #rules and #roles! 1078490033037770805
-	const ChannelIDs = {
-		NVOwelcome: "1081977778829795338",
-		NVOtestTestTesting: "962146899220131860",
-		ServerGeneral: "1048059530711404618",
-		DaniDeliaGeneral: "1078490033037770805",
-	};
-	let whereToSend;
-	if (member.guild.id === GuildIDs.DaniDeliaServer) {
-		whereToSend = ChannelIDs.DaniDeliaGeneral;
-	} else if (member.guild.id === GuildIDs.Server) {
-		whereToSend = ChannelIDs.ServerGeneral;
-	} else if (member.guild.id === GuildIDs.NVO) {
-		whereToSend = ChannelIDs.NVOwelcome;
-	}
-	client.channels.cache.get(whereToSend).send({ embeds: [embedMessage] });
 });
 
 //the following code makes leaf stack his own emoji on any leafemoji
