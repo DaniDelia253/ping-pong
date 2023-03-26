@@ -42,7 +42,7 @@ const LeafEmojiIds = {
 const EmojiIDs = {
     NVObearyyes: "941618386897612841",
     NVObearyno: "939389511677386792",
-    serveryescat: "1089295703689416834",
+    serveryescat: "1089386412849250414",
     servernocat: "1089296461415596153",
     dizzy: "💫",
 };
