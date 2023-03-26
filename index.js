@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import fetch from "node-fetch";
+import CommandoClient from "discord.js-commando";
 
 //text examples:
 //todo example orange
@@ -23,6 +24,41 @@ const ChannelTags = {
 	NVOanythingGoes: "<#938105437180551172>",
 };
 
+const ChannelIDs = {
+	NVOwelcome: "1081977778829795338",
+	NVOtestTestTesting: "962146899220131860",
+	NVOSuggestions: "1042496838005174292",
+	NVOHeyIPlanted: "939973859795431445",
+	ServerGeneral: "1048059530711404618",
+	ServerYesNo: "1089293622337359993",
+	ServerDizzyPlant: "1089311289031000130",
+	DaniDeliaGeneral: "1078490033037770805",
+};
+
+const LeafEmojiIds = {
+	serverLeaf: "1079573401888358510",
+	NVOLeaf: "1079573678515298344",
+};
+
+const EmojiIDs = {
+	NVObearyyes: "941618386897612841",
+	NVObearyno: "939389511677386792",
+	serveryescat: "1089295703689416834",
+	servernocat: "1089296461415596153",
+	dizzy: "💫",
+};
+
+const plantedAtPhrases = [
+	"planted at",
+	"planted in",
+	"plant at",
+	"Planted at",
+	"Planted in",
+	"Plant at",
+];
+
+//*END of important stuff
+
 //automatically set to stenny.... changed when someone joins:
 let newlyJoinedMemberId = "876850436953481277";
 
@@ -39,6 +75,29 @@ const client = new Client({
 		//if something isn't working, most likely the right info is not included here!
 	],
 });
+//create commando client
+const commandoClient = new CommandoClient({
+	commandPrefix: "?",
+	owner: "876850436953481277",
+});
+//register command groups:
+commandoClient.registry
+	.registerDefaultTypes()
+	.registerGroups([
+		["first", "my first command group"][
+			("second", "my second command group")
+		],
+	])
+	.registerDefaultGroups()
+	.registerDefaultCommands()
+	.registerCommandsIn(path.join(__dirname, "commands"));
+
+commandoClient.once("ready", () => {
+	console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
+	client.user.setActivity("with Commando");
+});
+
+commandoClient.on("error", console.error);
 
 //to make sure we know when the bot is ready
 client.on("ready", () => {
@@ -146,6 +205,34 @@ client.on("messageCreate", async (message) => {
 		//send the response
 		message.channel.send(response);
 	}
+	if (message.channelId === ChannelIDs.ServerYesNo) {
+		//if a message is sent in this channel then react with YES and NO emoji.
+		message.react(EmojiIDs.serveryescat);
+		message.react(EmojiIDs.servernocat);
+		//~~ alternative way of doing more than one reaction:
+		//~~ [EmojiIDs.serveryescat, EmojiIDs.servernocat].forEach((id) =>
+		//~~ 	message.react(id)
+		//~~ );
+	}
+	if (/\b[lL]+[eE]+[aA]+[fF]+\b/.test(message.content)) {
+		//have the bot react with leafs emoji
+		//check whether I/m in server or NVO
+		if (message.guildId === GuildIDs.Server) {
+			message.react(LeafEmojiIds.serverLeaf);
+		} else if (message.guildId === GuildIDs.NVO) {
+			message.react(LeafEmojiIds.NVOLeaf);
+		}
+	}
+	//if the message is in the channel HeyIPleanted
+	if (message.channelId === ChannelIDs.ServerDizzyPlant) {
+		//and it includes "planted at/in"
+		plantedAtPhrases.forEach((phrase) => {
+			if (message.content.includes(phrase)) {
+				//then react with the dizzy emoji.
+				message.react(EmojiIDs.dizzy);
+			}
+		});
+	}
 });
 
 //the following code makes leaf stack his own emoji on any leafemoji
@@ -166,4 +253,6 @@ client.on("messageReactionAdd", async (reaction) => {
 
 // log in and auhtenticate
 client.login(process.env.TOKEN);
-//(1079573401888358510 serverleaf) and (1079573678515298344 for NVO/akaServerID#938105437180551168)
+commandoClient.login(process.env.TOKEN);
+
+//(emojiID:1079573401888358510 serverleaf) and (EmojiID:1079573678515298344 for NVO/akaServerID#938105437180551168)
