@@ -1,7 +1,17 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import { Client, GatewayIntentBits, Partials } from "discord.js";
+import {
+    Client,
+    Collection,
+    REST,
+    Routes,
+    Events,
+    GatewayIntentBits,
+    Partials,
+} from "discord.js";
 import fetch from "node-fetch";
+import fs from "node:fs";
+import path from "node:path";
 
 //text examples:
 //todo example orange
@@ -78,6 +88,34 @@ const client = new Client({
 //to make sure we know when the bot is ready
 client.on("ready", () => {
     console.log("The bot is ready :)))))");
+});
+
+const commands = [
+    {
+        name: "meow",
+        description: "Replies with Meeeooow!!",
+    },
+    {
+        name: "roast",
+        description: "Ping pong will lovingly roast you.",
+    },
+];
+
+client.on("interactionCreate", async (interaction) => {
+    if (!interaction.isChatInputCommand()) return;
+
+    if (interaction.commandName === "meow") {
+        await interaction.reply("Meeeoooww!");
+    }
+    if (interaction.commandName === "roast") {
+        const response = await fetch(
+            "https://evilinsult.com/generate_insult.php"
+        );
+        const reply = await response.text();
+
+        //send the message with the fact to the channel!
+        await interaction.reply(reply);
+    }
 });
 
 //so basically, look at every new message.....
@@ -231,6 +269,21 @@ client.on("messageReactionAdd", async (reaction) => {
     }
 });
 
+const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
+
+(async () => {
+    try {
+        console.log("Started refreshing application (/) commands.");
+
+        await rest.put(Routes.applicationCommands(process.env.CLIENTID), {
+            body: commands,
+        });
+
+        console.log("Successfully reloaded application (/) commands.");
+    } catch (error) {
+        console.error(error);
+    }
+})();
 // log in and auhtenticate
 client.login(process.env.TOKEN);
 //(emojiID:1079573401888358510 serverleaf) and (EmojiID:1079573678515298344 for NVO/akaServerID#938105437180551168)
