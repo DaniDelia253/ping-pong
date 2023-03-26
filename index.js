@@ -1,8 +1,17 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import { Client, GatewayIntentBits, Partials } from "discord.js";
+import {
+	Client,
+	Collection,
+	REST,
+	Routes,
+	Events,
+	GatewayIntentBits,
+	Partials,
+} from "discord.js";
 import fetch from "node-fetch";
-import CommandoClient from "discord.js-commando";
+import fs from "node:fs";
+import path from "node:path";
 
 //text examples:
 //todo example orange
@@ -75,33 +84,38 @@ const client = new Client({
 		//if something isn't working, most likely the right info is not included here!
 	],
 });
-//create commando client
-const commandoClient = new CommandoClient({
-	commandPrefix: "?",
-	owner: "876850436953481277",
-});
-//register command groups:
-commandoClient.registry
-	.registerDefaultTypes()
-	.registerGroups([
-		["first", "my first command group"][
-			("second", "my second command group")
-		],
-	])
-	.registerDefaultGroups()
-	.registerDefaultCommands()
-	.registerCommandsIn(path.join(__dirname, "commands"));
-
-commandoClient.once("ready", () => {
-	console.log(`Logged in as ${client.user.tag}! (${client.user.id})`);
-	client.user.setActivity("with Commando");
-});
-
-commandoClient.on("error", console.error);
 
 //to make sure we know when the bot is ready
 client.on("ready", () => {
 	console.log("The bot is ready :)))))");
+});
+
+const commands = [
+	{
+		name: "meow",
+		description: "Replies with Meeeooow!!",
+	},
+	{
+		name: "roast",
+		description: "Ping pong will lovingly roast you.",
+	},
+];
+
+client.on("interactionCreate", async (interaction) => {
+	if (!interaction.isChatInputCommand()) return;
+
+	if (interaction.commandName === "meow") {
+		await interaction.reply("Meeeoooww!");
+	}
+	if (interaction.commandName === "roast") {
+		const response = await fetch(
+			"https://evilinsult.com/generate_insult.php"
+		);
+		const reply = await response.text();
+
+		//send the message with the fact to the channel!
+		await interaction.reply(reply);
+	}
 });
 
 //so basically, look at every new message.....
@@ -251,8 +265,21 @@ client.on("messageReactionAdd", async (reaction) => {
 	}
 });
 
+const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
+
+(async () => {
+	try {
+		console.log("Started refreshing application (/) commands.");
+
+		await rest.put(Routes.applicationCommands(process.env.CLIENTID), {
+			body: commands,
+		});
+
+		console.log("Successfully reloaded application (/) commands.");
+	} catch (error) {
+		console.error(error);
+	}
+})();
 // log in and auhtenticate
 client.login(process.env.TOKEN);
-commandoClient.login(process.env.TOKEN);
-
 //(emojiID:1079573401888358510 serverleaf) and (EmojiID:1079573678515298344 for NVO/akaServerID#938105437180551168)
