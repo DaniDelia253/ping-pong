@@ -190,6 +190,7 @@ client.on("messageCreate", async (message) => {
         /[pP]+[iIoO]+[nN]+[gG]+/.test(message.content) &&
         message.author.username !== "ping-pong" &&
         message.content !== "thank you ping pong" &&
+        message.content !== "Thank you ping pong" &&
         //todo message.content !== "show me a cat"   (   THERES A BETTER WAY APPARENTLY! :)   )
         !message.content.includes("show me a cat") &&
         !/\b[Gg]+[Oo]+[Oo]+[Dd]+.*[Nn]+[Ii]+[[Gg]+[Hh]+[Tt].*[Pp]+[Ii]+[Nn]+[Gg]+.*[Pp]+[Oo]+[Nn]+[Gg]+.*\b/.test(
