@@ -148,15 +148,16 @@ client.on("messageCreate", async (message) => {
 	//if you say thank you to ping pong
 	if (message.content.includes("thank you ping pong")) {
 		//i want him to reply with "youre welcome!"
-		message.channel.send("youre welcome!");
+		message.channel.send("You're welcome!");
 	}
-	//todo (fix: format and make it apply to stenny too), goodnight message
+	//if (message.content.includes("good night ping pong")) {
 	if (
-		message.author.username === "DaniDelia" &&
-		message.content.includes("good night ping pong")
+		/\b[Gg]+[Oo]+[Oo]+[Dd]+.*[Nn]+[Ii]+[[Gg]+[Hh]+[Tt].*[Pp]+[Ii]+[Nn]+[Gg]+.*[Pp]+[Oo]+[Nn]+[Gg]+.*\b/.test(
+			message.content
+		)
 	) {
-		//i want him to say goodnight back, specifying the person
-		message.channel.send("good night, dani!");
+		//ping pong will say goodnight back, and specify the person.
+		message.channel.send(`Good night, ${message.author.username}!`);
 	}
 
 	//and if it contains a number followed by a space and teh word fact....
@@ -190,7 +191,10 @@ client.on("messageCreate", async (message) => {
 		message.author.username !== "ping-pong" &&
 		message.content !== "thank you ping pong" &&
 		//todo message.content !== "show me a cat"   (   THERES A BETTER WAY APPARENTLY! :)   )
-		!message.content.includes("show me a cat")
+		!message.content.includes("show me a cat") &&
+		!/\b[Gg]+[Oo]+[Oo]+[Dd]+.*[Nn]+[Ii]+[[Gg]+[Hh]+[Tt].*[Pp]+[Ii]+[Nn]+[Gg]+.*[Pp]+[Oo]+[Nn]+[Gg]+.*\b/.test(
+			message.content
+		)
 	) {
 		//go through every single letter of the message..... and....
 		let response = "";
