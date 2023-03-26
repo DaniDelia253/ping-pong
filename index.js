@@ -146,7 +146,10 @@ client.on("messageCreate", async (message) => {
         message.react(list[number]);
     }
     //if you say thank you to ping pong
-    if (message.content.includes("thank you ping pong")) {
+    if (
+        message.content.includes("thank you ping pong") ||
+        message.content.includes("Thank you ping pong")
+    ) {
         //i want him to reply with "youre welcome!"
         message.channel.send("You're welcome!");
     }
