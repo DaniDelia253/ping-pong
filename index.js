@@ -134,7 +134,7 @@ client.on("messageCreate", async (message) => {
         const number = Math.floor(Math.random() * 10);
         message.react(list[number]);
     }
-    //!repeating with line 155?
+    //! the following repeating with line 155?
     //if you say thank you to ping pong
     // if (
     //     message.content.includes("thank you ping pong") ||
@@ -171,7 +171,7 @@ client.on("messageCreate", async (message) => {
             `Ahoy, ${message.author.username}!`,
             `Hello, ${message.author.username}! How are you?? :)`,
         ];
-        const number = Math.floor(Math.random() * );
+        const number = Math.floor(Math.random() * 3);
         message.channel.send(list[number]);
 
         // message.channel.send(`Why hello there, ${message.author.username}!`) &&
