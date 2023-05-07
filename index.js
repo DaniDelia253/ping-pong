@@ -148,9 +148,9 @@ client.on("messageCreate", async (message) => {
     //if (message.content.includes("good night ping pong")) {
 
     //!  ADD TO LEAF:
-    //if  "stenny" says "Meditation" then leaf will send a reminder to "bot fun" for "medi today!
+    //if  "StennysID" says "Meditation" then leaf will send a reminder to "bot fun" for "medi today!""
     if (
-        message.author.username === "stenny" &&
+        message.author.id === "876850436953481277" &&
         message.content.includes("Meditation") &&
         message.channelId === ChannelIDs.ServerInfographics
     ) {
