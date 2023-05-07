@@ -33,6 +33,8 @@ const ChannelIDs = {
     ServerGeneral: "1048059530711404618",
     ServerYesNo: "1089293622337359993",
     ServerDizzyPlant: "1089311289031000130",
+    ServerInfographics: "1104859015361609882",
+    ServerBotfun: "1078492864692113458",
     DaniDeliaGeneral: "1078490033037770805",
 };
 
@@ -144,6 +146,18 @@ client.on("messageCreate", async (message) => {
     //     message.channel.send("You're welcome!");
     //}
     //if (message.content.includes("good night ping pong")) {
+
+    //!  ADD TO LEAF:
+    //if  "stenny" says "Meditation" then leaf will send a reminder to "bot fun" for "medi today!
+    if (
+        message.author.username === "stenny" &&
+        message.content.includes("Meditation") &&
+        message.channelId === ChannelIDs.ServerInfographics
+    ) {
+        //message.channel.send("medi today");
+        const channel = await client.channels.fetch(ChannelIDs.ServerBotfun);
+        channel.send("medi today!");
+    }
 
     //!do the following three chat commands need to be lumped together somehow?
     if (
