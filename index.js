@@ -136,7 +136,7 @@ client.on("messageCreate", async (message) => {
         const number = Math.floor(Math.random() * 10);
         message.react(list[number]);
     }
-    //! the following repeating with line 155?
+    //! the following repeating with line 163?
     //if you say thank you to ping pong
     // if (
     //     message.content.includes("thank you ping pong") ||
@@ -154,9 +154,8 @@ client.on("messageCreate", async (message) => {
         message.content.includes("Meditation") &&
         message.channelId === ChannelIDs.ServerInfographics
     ) {
-        //message.channel.send("medi today");
         const channel = await client.channels.fetch(ChannelIDs.ServerBotfun);
-        channel.send("medi today!");
+        channel.send("There's a medi quest today!");
     }
 
     //!do the following three chat commands need to be lumped together somehow?
