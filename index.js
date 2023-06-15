@@ -4,6 +4,8 @@ import { Client, REST, Routes, GatewayIntentBits } from "discord.js";
 import fetch from "node-fetch";
 import commands from "./commands.js";
 import { createEmbed } from "./commands/embed.js";
+//import moment from "moment/moment.js";
+import moment from "moment-timezone";
 
 //text examples:
 //todo example orange
@@ -59,6 +61,10 @@ const plantedAtPhrases = [
     "Planted in",
     "Plant at",
 ];
+
+const currentDate = new Date();
+const currentUTCTime = `${currentDate.getUTCHours()}:${currentDate.getMinutes()}`;
+//console.log(currentTimeCST);
 
 //*END of important stuff
 
@@ -288,7 +294,19 @@ client.on("messageCreate", async (message) => {
                 //then react with the dizzy emoji.
                 message.react(EmojiIDs.dizzy);
             }
+            3;
         });
+    }
+
+    //scheduling messages on user request:
+    //if "leaf ping me for the next event" is said
+    //then leaf will send a reminder at the scheduled time and @ the person.
+    if (message.content.includes("next event")) {
+        //add the person's user id--  <@${member.user.id}>
+        const EventList = [];
+        //if someone joins as the 1st person on the list, start timer till the event and send the message to everyone on the list when the event happns, clear the list, and stop the timer?
+        //determine when the next event is happening
+        //if the seconds are 00, it is geyser time:
     }
 });
 
