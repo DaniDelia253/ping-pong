@@ -37,6 +37,8 @@ const ChannelIDs = {
     ServerDizzyPlant: "1089311289031000130",
     ServerInfographics: "1104859015361609882",
     ServerBotfun: "1078492864692113458",
+    ServerCopy: "1118949640960737395",
+    ServerCopyCat: "1118949696862429276",
     DaniDeliaGeneral: "1078490033037770805",
 };
 
@@ -117,6 +119,19 @@ client.on("interactionCreate", async (interaction) => {
 
 //so basically, look at every new message.....
 client.on("messageCreate", async (message) => {
+    if (message.channelId === ChannelIDs.ServerCopy) {
+        const urllist = [];
+        Array.from(message.attachments).forEach((attachment) =>
+            urllist.push(attachment[1].url)
+        );
+        const channel = await client.channels.fetch(ChannelIDs.ServerCopyCat);
+        channel.send(`<@${message.author.id}> sent:`);
+        if (message.content !== "") {
+            channel.send(message.content);
+        }
+        urllist.forEach((url) => channel.send(url));
+    }
+
     //if the message is from dani, stenny or Arcane and has the words "has reached level", then react with an emoji from the list
     if (
         //todo add/replace emojies, and change the random number limit accordingly.
