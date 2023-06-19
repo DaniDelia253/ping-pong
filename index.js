@@ -39,6 +39,7 @@ const ChannelIDs = {
     ServerBotfun: "1078492864692113458",
     ServerCopy: "1118949640960737395",
     ServerCopyCat: "1118949696862429276",
+    ServerByeBye: "1120095286816166009",
     DaniDeliaGeneral: "1078490033037770805",
 };
 
@@ -119,7 +120,12 @@ client.on("interactionCreate", async (interaction) => {
 
 //so basically, look at every new message.....
 client.on("messageCreate", async (message) => {
-    if (message.channelId === ChannelIDs.ServerCopy) {
+    if (
+        message.channelId === ChannelIDs.ServerCopy &&
+        //! ADD THIS BACK IN: message.author.id !== "876850436953481277" (Stenny's userid)
+        //ping pongs user id:
+        message.author.id !== "1078488691552571513"
+    ) {
         const urllist = [];
         Array.from(message.attachments).forEach((attachment) =>
             urllist.push(attachment[1].url)
@@ -130,6 +136,18 @@ client.on("messageCreate", async (message) => {
             channel.send(message.content);
         }
         urllist.forEach((url) => channel.send(url));
+        message.delete();
+        const tychannel = await client.channels.fetch(ChannelIDs.ServerCopy);
+        const tymessage = await tychannel.send(
+            "Thank you for submitting! Your message has been revieved. <:saywhaacat:1079448308604485743>"
+        );
+        console.log(tymessage);
+        setTimeout(() => tymessage.delete(), 10000);
+    }
+
+    //this is testing the delete function of pingpong
+    if (message.channelId === ChannelIDs.ServerByeBye) {
+        message.delete();
     }
 
     //if the message is from dani, stenny or Arcane and has the words "has reached level", then react with an emoji from the list
