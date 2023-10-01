@@ -4,11 +4,6 @@ const commands = [
 		description: "Replies with Meeeooow!!",
 	},
 	{
-		name: "roast",
-		description: "Ping pong will lovingly roast you.",
-	},
-
-	{
 		name: "embed",
 		description:
 			"Enter the channelID and paste the corresponding value for each field in the code.",
